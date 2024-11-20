@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customizable Greeting Card</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="card">
+        <div id="imageContainer"></div>
+        <h1 id="greetingText">Your Greeting!</h1>
+        <p id="messageText">Your personalized message will appear here.</p>
+    </div>
+    <button id="custom" onclick="openCustomization()">Customize Card</button>
+    <div id="modal">
+        <div id="modalContent">
+            <h2>Customize Your Greeting Card</h2>
+            <form id="customizationForm" onsubmit="return false;">
+                <table class="Table">
+                    <!-- Greeting and Message -->
+                    <tr>
+                        <td><label for="greetingInput">Greeting Text:*</label></td>
+                        <td>
+                            <input type="text" id="greetingInput" placeholder="Enter greeting text">
+                            <span class="error-message" id="greetingError"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="messageInput">Message Text:*</label></td>
+                        <td>
+                            <textarea id="messageInput" placeholder="Enter message"></textarea>
+                            <span class="error-message" id="messageError"></span>
+                        </td>
+                    </tr>
+                    <!-- Background Color -->
+                    <tr>
+                        <td><label for="bgType">Background Type:*</label></td>
+                        <td>
+                            <select id="bgType" onchange="toggleBackgroundOptions()">
+                                <option value="solid">Solid Color</option>
+                                <option value="gradient">Gradient</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="solidColorPicker">
+                        <td><label for="colorPicker">Choose Color:*</label></td>
+                        <td><input type="color" id="colorPicker" value="#ffffff"></td>
+                    </tr>
+                    <tr id="gradientPicker" style="display: none;">
+                        <td><label>Gradient Colors:*</label></td>
+                        <td>
+                            <div class="gradient-inputs">
+                                <div>
+                                    <label for="gradientStart">Start:</label>
+                                    <input type="color" id="gradientStart" value="#ff7f7f">
+                                </div>
+                                <div>
+                                    <label for="gradientEnd">End:</label>
+                                    <input type="color" id="gradientEnd" value="#ffdfdf">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Text Styling -->
+                    <tr>
+                        <td><label for="textColorPicker">Text Color:*</label></td>
+                        <td><input type="color" id="textColorPicker" value="#000000"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="fontSelect">Text Font:*</label></td>
+                        <td>
+                            <select id="fontSelect">
+                                <option value="Arial">Arial</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Lobster">Lobster</option>
+                                <option value="Pacifico">Pacifico</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="fontSize">Font Size:*</label></td>
+                        <td>
+                            <input type="number" id="fontSize" value="20" min="10" max="50">
+                            <span class="error-message" id="fontSizeError"></span>
+                        </td>
+                    </tr>
+                    <!-- Card Shape and Size -->
+                    <tr>
+                        <td><label for="shapePicker">Card Shape:*</label></td>
+                        <td>
+                            <select id="shapePicker">
+                                <option value="rectangle">Rectangle</option>
+                                <option value="rounded">Rounded</option>
+                                <option value="circle">Circle</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <!-- Image Customization -->
+                    <tr>
+                        <td><label for="imageInput">Upload Image:</label></td>
+                        <td>
+                            <input type="file" id="imageInput" accept="image/*">
+                            <span class="error-message" id="imageError"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="imageHeightInput">Image Height (% of Card):*</label></td>
+                        <td>
+                            <input type="number" id="imageHeightInput" value="50" min="10" max="90">
+                            <span class="error-message" id="imageHeightError"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="imageWidthInput">Image Width (% of Card):*</label></td>
+                        <td>
+                            <input type="number" id="imageWidthInput" value="100" min="10" max="100">
+                            <span class="error-message" id="imageWidthError"></span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="button-container">
+                    <button id="apply" onclick="validateAndApply()">Apply</button>
+                    <button id="close" onclick="closeCustomization()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
