@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customizable Greeting Card</title>
-    <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customizable Greeting Card</title>
+        <link rel="stylesheet" href="index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
+        <!-- Add html2canvas library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    </head>
 <body>
     <div id="card">
         <div id="imageContainer"></div>
         <h1 id="greetingText">Your Greeting!</h1>
         <p id="messageText">Your personalized message will appear here.</p>
     </div>
-    <button id="custom" onclick="openCustomization()">Customize Card</button>
+    <div class="button-group">
+        <button id="custom" onclick="openCustomization()">Customize Card</button>
+        <button id="download" onclick="downloadCard()">Download Card</button>
+    </div>
+
     <div id="modal">
         <div id="modalContent">
             <h2>Customize Your Greeting Card</h2>
