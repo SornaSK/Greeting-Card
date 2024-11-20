@@ -77,7 +77,7 @@ function toggleBackgroundOptions() {
     const bgType = document.getElementById('bgType').value;
     const solidColorPicker = document.getElementById('solidColorPicker');
     const gradientPicker = document.getElementById('gradientPicker');
-    
+
     if (bgType === 'solid') {
         solidColorPicker.style.display = 'table-row';
         gradientPicker.style.display = 'none';
@@ -91,32 +91,32 @@ function calculateCardDimensions(greeting, message) {
     // Base dimensions
     let width = 300; // minimum width
     let height = 100; // minimum height
-    
+
     // Calculate required width based on text length
     const greetingLength = greeting.length;
     const messageLength = message.length;
     const maxLength = Math.max(greetingLength, messageLength);
-    
+
     // Adjust width based on text length
     if (maxLength > 30) {
         width = Math.min(600, width + (maxLength * 5));
     }
-    
+
     // Adjust height based on message length (for line wrapping)
     const estimatedLines = Math.ceil(messageLength / (width / 15)); // rough estimate of chars per line
     height += estimatedLines * 30; // 30px per line
-    
+
     // Add padding for greeting
     height += 80; // space for greeting
-    
+
     // Ensure minimum dimensions
     width = Math.max(300, width);
-    height = Math.max(200, height);
-    
+    height = Math.max(100, height);
+
     // Cap maximum dimensions
     width = Math.min(600, width);
     height = Math.min(600, height);
-    
+
     return { width, height };
 }
 
@@ -185,10 +185,10 @@ function applyCustomizations() {
     // Get text content
     const greeting = document.getElementById('greetingInput').value;
     const message = document.getElementById('messageInput').value;
-    
+
     // Calculate card dimensions based on text
     const dimensions = calculateCardDimensions(greeting, message);
-    
+
     // Apply dimensions
     card.style.width = `${dimensions.width}px`;
     card.style.height = `${dimensions.height}px`;
@@ -212,7 +212,7 @@ function applyCustomizations() {
     const textColor = document.getElementById('textColorPicker').value;
     const font = document.getElementById('fontSelect').value;
     const fontSize = document.getElementById('fontSize').value;
-    
+
     document.getElementById('greetingText').style.color = textColor;
     document.getElementById('messageText').style.color = textColor;
     card.style.fontFamily = font;
@@ -237,10 +237,10 @@ function applyCustomizations() {
         const reader = new FileReader();
         reader.onload = (e) => {
             imageContainer.style.backgroundImage = `url(${e.target.result})`;
-            
+
             const imageHeight = document.getElementById('imageHeightInput').value;
             const imageWidth = document.getElementById('imageWidthInput').value;
-            
+
             imageContainer.style.height = `${imageHeight}%`;
             imageContainer.style.width = `${imageWidth}%`;
         };
@@ -255,3 +255,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize background options
     toggleBackgroundOptions();
 });
+
+function downloadCard() {
+    // Get the card element
+    const card = document.getElementById('card');    
+    card.classList.add('downloading');
+    const options = {
+        backgroundColor: null,
+        scale: 2, // Higher quality
+        useCORS: true,
+        logging: false
+    };
+    
+    // Convert the card to canvas
+    html2canvas(card, options).then(canvas => {
+        // Remove temporary class
+        card.classList.remove('downloading');
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.download = 'greeting-card.png';
+        link.href = canvas.toDataURL('image/png');
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }).catch(error => {
+        console.error('Error generating card image:', error);
+        alert('There was an error downloading your card. Please try again.');
+        card.classList.remove('downloading');
+    });
+}
+
+const style = document.createElement('style');
+style.textContent = `
+    .downloading {
+        transform: scale(1) !important;
+        transform-origin: top left;
+    }
+`;
+document.head.appendChild(style);
